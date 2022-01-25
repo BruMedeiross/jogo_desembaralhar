@@ -21,6 +21,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.unscramble.R
@@ -47,7 +48,9 @@ class GameFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         //A função onCreateView() infla o XML do layout game_fragment usando o objeto de vinculação.
-        binding = GameFragmentBinding.inflate(inflater, container, false)
+        // antes - binding = GameFragmentBinding.inflate(inflater, container, false)
+        //agora dataBinding = mude a instanciação da variável binding para usar a vinculação de dado
+        binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false)
 
         Log.d("GameFragment", "Word: ${viewModel.currentScrambledWord} " +
                 "Score: ${viewModel.score} WordCount: ${viewModel.currentWordCount}")
@@ -58,16 +61,22 @@ class GameFragment : Fragment() {
     //A função onViewCreated() configura os listeners de cliques no botão e atualiza a IU.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //inicialize as variáveis de layout
+        binding.gameViewModel = viewModel
+        binding.maxNoOfWords = MAX_NO_OF_WORDS
+
+        // Especifique a visualização do fragmento como o proprietário do ciclo de vida da ligação.
+        // Isso é usado para que binding possa observar as atualizações do LiveData
+        binding.lifecycleOwner = viewLifecycleOwner
 
         // Configura um ouvinte de clique para os botões Enviar e Ignorar.
         binding.submit.setOnClickListener { onSubmitWord()}
         binding.skip.setOnClickListener { onSkipWord()}
 
         // Atualiza a  UI
-        updateNextWordOnScreen()
-        binding.score.text = getString(R.string.score, 0)
-        binding.wordCount.text = getString(
-            R.string.word_count, 0, MAX_NO_OF_WORDS)
+        //  updateNextWordOnScreen()
+
+
     }
 
     //O método onSubmitWord() é o listener de clique do botão Submit.
@@ -78,10 +87,9 @@ class GameFragment : Fragment() {
 
         if (viewModel.isUserWordCorrect(playerWord)) {
             setErrorTextField(false)
-            if (viewModel.nextWord()) {
-                updateNextWordOnScreen()
-            } else {
+            if (!viewModel.nextWord()) {
                 showFinalScoreDialog()
+           //     updateNextWordOnScreen()
             }
         } else {
             setErrorTextField(true)
@@ -92,7 +100,7 @@ class GameFragment : Fragment() {
     private fun onSkipWord() {
         if (viewModel.nextWord()) {
             setErrorTextField(false)
-            updateNextWordOnScreen()
+          //  updateNextWordOnScreen()
         } else {
             showFinalScoreDialog()
         }
@@ -100,20 +108,11 @@ class GameFragment : Fragment() {
 
 
 
-    /*
-     *  é uma função auxiliar que escolhe uma palavra aleatória da lista de palavras
-     *  e embaralha as letras dela.
-     */
-    private fun getNextScrambledWord(): String {
-        val tempWord = allWordsList.random().toCharArray()
-        tempWord.shuffle()
-        return String(tempWord)
-    }
 
     private fun showFinalScoreDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.congratulations))
-            .setMessage(getString(R.string.you_scored, viewModel.score))
+            .setMessage(getString(R.string.you_scored, viewModel.score.value))
             .setCancelable(false)
             .setNegativeButton(getString(R.string.exit)) { _, _ ->
                 exitGame()
@@ -131,7 +130,7 @@ class GameFragment : Fragment() {
     private fun restartGame() {
         viewModel.reinitializeData()
         setErrorTextField(false)
-        updateNextWordOnScreen()
+       // updateNextWordOnScreen()
 
     }
 
@@ -141,13 +140,6 @@ class GameFragment : Fragment() {
     private fun exitGame() {
         activity?.finish()
     }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("GameFragment", "GameFragment destroyed!")
-    }
-
 
     /*
     * O método setErrorTextField() limpa o conteúdo do campo de texto e redefine o status do erro.
@@ -165,14 +157,6 @@ class GameFragment : Fragment() {
 
 
 
-
-
-    // uma nova palavra embaralhada será exibida na inicialização do app.
-    // de onde? -> vinda da view model.
-    private fun updateNextWordOnScreen() {
-        // antes - binding.textViewUnscrambledWord.text = currentScrambledWord
-        binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
-    }
 }
 
 
@@ -203,4 +187,65 @@ class GameFragment : Fragment() {
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
+ */
+
+/* implementação do liveData
+
+* Este método não é necessário, porque você anexará um observador ao LiveData.
+
+* agora a visualização de texto da palavra embaralhada será atualizada automaticamente no observador LiveData,
+não no método updateNextWordOnScreen().
+
+* // uma nova palavra embaralhada será exibida na inicialização do app.
+    // de onde? -> vinda da view model.
+    private fun updateNextWordOnScreen() {
+        // antes - binding.textViewUnscrambledWord.text = currentScrambledWord
+        binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
+    }
+*
+* */
+
+/*
+        /*vinculados direto no layout
+
+        //observe - serão acionados quando o valor da pontuação e da contagem de palavras mudar no ViewModel
+       // antes - binding.score.text = getString(R.string.score, 0)
+        viewModel.score.observe(viewLifecycleOwner,
+            { newScore ->
+                binding.score.text = getString(R.string.score, newScore)
+            })
+
+        // antes - binding.wordCount.text = getString( R.string.word_count, 0, MAX_NO_OF_WORDS)
+        viewModel.currentWordCount.observe(viewLifecycleOwner,
+            { newWordCount ->
+                binding.wordCount.text =
+                    getString(R.string.word_count, newWordCount, MAX_NO_OF_WORDS)
+            })
+
+
+        viewModel.currentScrambledWord.observe(viewLifecycleOwner,
+            { newWord ->
+                binding.textViewUnscrambledWord.text = newWord
+            })*/
+ */
+
+/*
+     CODIGOS INUTILIZADOS
+    /*
+     *  é uma função auxiliar que escolhe uma palavra aleatória da lista de palavras
+     *  e embaralha as letras dela.
+     */
+    private fun getNextScrambledWord(): String {
+        val tempWord = allWordsList.random().toCharArray()
+        tempWord.shuffle()
+        return String(tempWord)
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("GameFragment", "GameFragment destroyed!")
+    }
+
+
  */
