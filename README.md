@@ -9,6 +9,17 @@ para formar uma palavra usando todas as letras da palavra embaralhada exibida.
 Usado no [Android Basics with Kotlin](https://developer.android
 .com/courses/android-basics-kotlin/course).
 
+PARTE II
+--------------
+
+Converta os dados do app no ViewModel para LiveData e observe as mudanças para atualizar a IU automaticamente.
+
+- LiveData
+- Vinculação de dados no arquivo de layout
+- Adicionar variáveis de vinculação de dados
+- Usar expressões de vinculação
+- Talkback  implementar para ler em voz alta os caracteres individuais da palavra embaralhada.
+
 
 Pré-requisitos
 --------------
