@@ -1,48 +1,47 @@
-Unscramble App
+Aplicativo de desembaralhar
 ===================================
 
-Starter code for Android Basics codelab - Store the data in a ViewModel
+Código inicial para codelab Android Basics - Armazenar os dados em um ViewModel
 
-Unscramble is  a single player game app that displays scrambled words. To play the game, player has
-to make a word using all the letters from the displayed scrambled word.
+Unscramble é um aplicativo de jogo para um jogador que exibe palavras embaralhadas. Para jogar o jogo, o jogador tem
+para formar uma palavra usando todas as letras da palavra embaralhada exibida.
 
-Used in the [Android Basics with Kotlin](https://developer.android
-.com/courses/android-basics-kotlin/course) course.
+Usado no [Android Basics with Kotlin](https://developer.android
+.com/courses/android-basics-kotlin/course).
 
 
-Pre-requisites
+Pré-requisitos
 --------------
 
-You need to know:
-- Knowledge about Fragments.
-- How to design a layout in ConstraintLayout.
-- Able to write control flow statements (if / else, when statements).
-- Able to update the UI of the app based on user input.
-- Able to add a click listener to a Button.
+Você precisa saber:
+- Conhecimento sobre Fragmentos.
+- Como projetar um layout em ConstraintLayout.
+- Capaz de escrever instruções de fluxo de controle (if/else, quando instruções).
+- Capaz de atualizar a interface do usuário do aplicativo com base na entrada do usuário.
+- Capaz de adicionar um ouvinte de clique a um botão.
 
 
-Getting Started
+Começando
 ---------------
 
-1. Download and run the app.
+1. Baixe e execute o aplicativo.
 
-License
+Licença
 -------
 
 Copyright (C) 2020 The Android Open Source Project.
 
-Licensed to the Apache Software Foundation (ASF) under one or more contributor
-license agreements.  See the NOTICE file distributed with this work for
-additional information regarding copyright ownership.  The ASF licenses this
-file to you under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License.  You may obtain a copy of
-the License at
+Licenciado para a Apache Software Foundation (ASF) sob um ou mais colaboradores
+contratos de licença. Veja o arquivo AVISO distribuído com este trabalho para
+informações adicionais sobre propriedade de direitos autorais. A ASF licencia este
+arquivo para você sob a Licença Apache, Versão 2.0 (a "Licença"); talvez você não
+usar este arquivo, exceto em conformidade com a Licença. Você pode obter uma cópia do
+a Licença em
 
   http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-License for the specific language governing permissions and limitations under
-the License.
-
+A menos que exigido pela lei aplicável ou acordado por escrito, o software
+distribuído sob a Licença é distribuído "COMO ESTÁ", SEM
+GARANTIAS OU CONDIÇÕES DE QUALQUER TIPO, expressas ou implícitas. Veja o
+Licença para o idioma específico que rege as permissões e limitações sob
+a licença.
